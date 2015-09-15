@@ -1,24 +1,18 @@
-import java.util.*;
+package ch2;
+
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Solution01 {
 
-    // using set
-    public boolean isUniqueWithSet(String str) {
-        Set<Character> set = new HashSet<>();
-        for (int i = 0; i < str.length(); i++) {
-            if (set.contains(str.charAt(i))) return false;
-            set.add(str.charAt(i));
+    public class ListNode {
+        public ListNode next;
+        public int val;
+        public ListNode(int val) {
+            this.val = val;
+            next = null;
         }
-        return true;
-    }
-
-    // without extra data structure
-    public boolean isUnique(String str) {
-        byte[] bytes = str.getBytes();
-        Arrays.sort(bytes);
-        for (int i = 1; i < str.length(); i++)
-            if (bytes[i] == bytes[i - 1]) return false;
-        return true;
     }
 
     private ListNode remove(ListNode node, ListNode tar) {
@@ -44,6 +38,7 @@ public class Solution01 {
         while (node != null) {
             if (set.contains(node.val)) n.next = node.next;
             else {
+                n.next = node;
                 n = n.next;
                 set.add(node.val);
             }
@@ -51,4 +46,25 @@ public class Solution01 {
         }
     }
 
+    // using integer to set the value of ListNode instead of char
+    private void run() {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        ListNode virtual = new ListNode(-1), tail = virtual;
+        for (int i = 0; i < n; i++) {
+            int val = scanner.nextInt();
+            tail.next = new ListNode(val);
+            tail = tail.next;
+        }
+        removeDups(virtual.next);
+        // removeDupsWithSet(virtual.next);
+        for (tail = virtual.next; tail != null; tail = tail.next)
+            System.out.print(tail.val + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Solution01 solution = new Solution01();
+        solution.run();
+    }
 }

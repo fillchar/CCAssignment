@@ -1,3 +1,5 @@
+package ch1;
+
 import java.util.*;
 
 public class Solution01 {
@@ -20,5 +22,18 @@ public class Solution01 {
             if (bytes[i] == bytes[i - 1]) return false;
         return true;
     }
+
+    private void run() {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        System.out.println(isUnique(str));
+        //System.out.println(isUniqueWithSet(str));
+    }
+
+    public static void main(String[] args) {
+        Solution01 solution = new Solution01();
+        solution.run();
+    }
+
 
 }

@@ -1,23 +1,21 @@
-import java.util.HashSet;
-import java.util.Set;
+package ch2;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by floyd on 9/10/2015.
  */
 public class Solution08 {
 
-    public void zeroMatrix(int[][] matrix) {
-        Set<Integer> row = new HashSet<>(), col = new HashSet<>();
-        for (int i = 0; i < matrix.length; i++)
-            for (int j = 0; j < matrix[i].length; j++)
-                if (matrix[i][j] == 0) {
-                    row.add(i);
-                    col.add(j);
-                }
-        for (int i : row)
-            for (int j = 0; j < matrix[i].length; j++) matrix[i][j] = 0;
-        for (int i : col)
-            for (int j = 0; j < matrix.length; j++) matrix[j][i] = 0;
+    public class ListNode {
+        public ListNode next;
+        public int val;
+        public ListNode(int val) {
+            this.val = val;
+            next = null;
+        }
     }
 
     public ListNode loopDetection(ListNode node) {
@@ -36,10 +34,33 @@ public class Solution08 {
         return h1;
     }
 
+    // using integer to set the value of ListNode instead of char
+    private void run() {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        ListNode virtual = new ListNode(-1), tail = virtual;
+        Map<Integer, ListNode> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            int val = scanner.nextInt();
+            if (map.containsKey(val)) {
+                tail.next = map.get(val);
+                break;
+            }
+            else {
+                tail.next = new ListNode(val);
+                tail = tail.next;
+                map.put(val, tail);
+            }
+        }
+        ListNode node = loopDetection(virtual.next);
+        if (node != null) System.out.println(node.val);
+        else System.out.println(node);
+    }
+
     public static void main(String[] args) {
 
-        //Solution08 solution = new Solution08();
-        //solution.loopDetection();
+        Solution08 solution = new Solution08();
+        solution.run();
     }
 
 }

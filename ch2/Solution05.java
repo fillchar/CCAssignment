@@ -1,30 +1,21 @@
+package ch2;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by floyd on 9/10/2015.
  */
 public class Solution05 {
 
-    public boolean oneAway(String s1, String s2) {
-        int size1 = s1.length(), size2 = s2.length();
-        if (Math.abs(size1 - size2) > 1) return false;
-        if (size1 == size2) {
-            int cnt = 0;
-            for (int i = 0; i < size1; i++)
-                if (s1.charAt(i) != s2.charAt(i)) cnt++;
-            return cnt < 2;
+    public class ListNode {
+        public ListNode next;
+        public int val;
+        public ListNode(int val) {
+            this.val = val;
+            next = null;
         }
-        if (size1 > size2) {
-            String t = s1;
-            s1 = s2;
-            s2 = t;
-            size1 = size2;
-        }
-        int prefix = 0;
-        while (prefix < size1 && s1.charAt(prefix) == s2.charAt(prefix)) prefix++;
-        while (prefix < size1 && s1.charAt(prefix) == s2.charAt(prefix + 1)) prefix++;
-        return prefix >= size1;
     }
 
     public ListNode sumLists(ListNode node1, ListNode node2) {
@@ -33,30 +24,48 @@ public class Solution05 {
             list1.add(node1.val);
         for (; node2 != null; node2 = node2.next)
             list2.add(node2.val);
-        if (list1.size() > list2.size()) {
-            List<Integer> t = list1;
-            list1 = list2;
-            list2 = t;
-        }
-        int[] arr = new int[list2.size()];
-        for (int i = list1.size() - 1; i >= 0; i--)
-            arr[list2.size() - list1.size() + i] =  list1.get(i) + list2.get(list2.size() - list1.size() + i);
-        for (int i = list2.size() - 1; i > 0; i--)
+        int[] arr = new int[Math.max(list2.size(), list1.size()) + 1];
+        for (int i = 0; i < list2.size(); i++) arr[i] = list2.get(i);
+        for (int i = 0; i < list1.size(); i++)
+            arr[i] +=  list1.get(i);
+        for (int i = 0; i < arr.length - 1; i++)
             if (arr[i] > 9) {
                 arr[i] -= 10;
-                arr[i - 1]++;
+                arr[i + 1]++;
             }
         ListNode head = new ListNode(-1), tail = head;
-        if (arr.length > 0 && arr[0] > 9) {
-            head.next = new ListNode(1);
-            tail = head.next;
-            arr[0] -= 10;
-        }
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length - 1; i++) {
             tail.next = new ListNode(arr[i]);
             tail = tail.next;
         }
+        if (arr[arr.length - 1] > 0) tail.next = new ListNode(1);
         return head.next;
+    }
+
+    // using integer to set the value of ListNode instead of char
+    private void run() {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt(), m = scanner.nextInt();
+        ListNode virtual1 = new ListNode(-1), tail1 = virtual1;
+        ListNode virtual2 = new ListNode(-1), tail2 = virtual2;
+        for (int i = 0; i < n; i++) {
+            int val = scanner.nextInt();
+            tail1.next = new ListNode(val);
+            tail1 = tail1.next;
+        }
+        for (int i = 0; i < m; i++) {
+            int val = scanner.nextInt();
+            tail2.next = new ListNode(val);
+            tail2 = tail2.next;
+        }
+        for (ListNode node = sumLists(virtual1.next, virtual2.next); node != null; node = node.next)
+            System.out.print(node.val + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Solution05 solution = new Solution05();
+        solution.run();
     }
 
 }

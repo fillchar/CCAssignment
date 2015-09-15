@@ -1,3 +1,9 @@
+package ch1;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * Created by floyd on 9/10/2015.
  */
@@ -22,6 +28,17 @@ public class Solution05 {
         while (prefix < size1 && s1.charAt(prefix) == s2.charAt(prefix)) prefix++;
         while (prefix < size1 && s1.charAt(prefix) == s2.charAt(prefix + 1)) prefix++;
         return prefix >= size1;
+    }
+
+    private void run() {
+        Scanner scanner = new Scanner(System.in);
+        String str1 = scanner.nextLine(), str2 = scanner.nextLine();
+        System.out.println(oneAway(str1, str2));
+    }
+
+    public static void main(String[] args) {
+        Solution05 solution = new Solution05();
+        solution.run();
     }
 
 }
