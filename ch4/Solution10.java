@@ -14,12 +14,20 @@ public class Solution10 {
             this.val = val;
             this.left = this.right = null;
         }
-        public TreeNode rotate() {
-            TreeNode node = left;
-            left = node.right;
-            node.right = this;
-            return node;
-        }
+    }
+
+    public boolean check(TreeNode node1, TreeNode node2) {
+        if (node1 == null && node2 == null) return true;
+        if (node1 == null || node2 == null) return false;
+        if (node1.val != node2.val) return false;
+        return check(node1.left, node2.left) && check(node1.right, node2.right);
+    }
+
+    public boolean checkSubtree(TreeNode root1, TreeNode root2) {
+        if (root2 == null) return true; // Suppose that an empty tree is a subtree of any tree.
+        if (root1 == null) return false;
+        if (check(root1, root2)) return true;
+        return checkSubtree(root1.left, root2) || checkSubtree(root1.right, root2);
     }
 
 }
