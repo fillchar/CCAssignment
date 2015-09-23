@@ -20,7 +20,7 @@ public class Solution04 {
         if (node == null) return 0;
         int cntL = dfs(node.left), cntR = dfs(node.right);
         isBalance = isBalance && (Math.abs(cntL - cntR) < 2);
-        return cntL + cntR + 1;
+        return Math.max(cntL, cntR) + 1;
     }
 
     public boolean checkBalanced(TreeNode root) {
