@@ -2,6 +2,7 @@ package ch10;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by floyd on 2015/9/29.
@@ -19,5 +20,18 @@ public class Solution08 {
             else cover[pos] += 1 << bias;
         }
         return ret;
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) nums[i] = scanner.nextInt();
+        System.out.println(findDuplicates(nums));
+    }
+
+    public static void main(String[] args) {
+        Solution08 solution = new Solution08();
+        solution.run();
     }
 }
