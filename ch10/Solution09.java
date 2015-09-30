@@ -5,6 +5,8 @@ package ch10;
  */
 public class Solution09 {
 
+    // passed in leetcode
+
     int getMaxLess(int[] list, int target) {
         int l = 0, r = list.length;
         while (l < r - 1) {

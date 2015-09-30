@@ -7,8 +7,8 @@ import java.util.Random;
  * Created by thushy on 2015/9/23.
  */
 public class Solution11 {
-
-    public void peakAndValleys(int[] nums) {
+    // O(n log n)
+    public void peakAndValleysSorted(int[] nums) {
         int[] tmp = new int[nums.length];
         System.arraycopy(nums, 0, tmp, 0, nums.length);
         Arrays.sort(tmp);
@@ -18,6 +18,22 @@ public class Solution11 {
             nums[pos++] = tmp[l--];
         }
         if (r < nums.length) nums[pos] = tmp[r];
+    }
+
+    int getMax(int[] nums, int pos) {
+        int a = nums[pos - 1], b = nums[pos], c = pos < nums.length - 1 ? nums[pos + 1] : 0x80000000;
+        if (c > b && c > a) return pos + 1;
+        if (a > c && a > b) return pos - 1;
+        return pos;
+    }
+
+    // O(n)
+    public void peakAndValleys(int[] nums) {
+        for (int i = 1; i < nums.length; i += 2) {
+            int pos = getMax(nums, i), t = nums[i];
+            nums[i] = nums[pos];
+            nums[pos] = t;
+        }
     }
 
     public void run() {

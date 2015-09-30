@@ -9,6 +9,8 @@ public class Solution03 {
 
     // Satisfied to both ascending and descending order.
 
+    // passed in leetcode
+
     int binarySearch(int A[], int l, int r, int tar) {
         while (l < r) {
             int m = (l + r) >> 1;
